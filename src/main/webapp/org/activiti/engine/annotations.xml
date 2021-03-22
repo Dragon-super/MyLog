@@ -1,0 +1,5 @@
+<root>
+    <item name='org.activiti.engine.ProcessEngineConfiguration'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

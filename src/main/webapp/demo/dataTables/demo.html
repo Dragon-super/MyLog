@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表 | 吾志</title>
+    <link href="../../plugin/DataTables-1.10.18/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+
+
+    <!--<link href="../../css/dataTables.bootstrap.min.css"  rel="stylesheet" type="text/css">-->
+    <!--     <link href="../../css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+         <script src="../../js/jquery-3.1.1.min.js" type="text/javascript"></script>
+         <script src="../../js/jquery.dataTables.js" type="text/javascript"></script>-->
+
+</head>
+<body>
+<div align="center" id =  "toolbar">
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">名称</th>
+            <th class="text-center">密码</th>
+            <th class="text-center">邮箱</th>
+            <th class="text-center">手机</th>
+            <th class="text-center">盐值</th>
+            <th class="text-center">注册时间</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript" src="../../plugin/jQuery-3.3.1/jquery-3.3.1.min.js"></script>
+<script src="../../plugin/DataTables-1.10.18/js/jquery.dataTables.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+      /*  var userName = "Test";
+        alert(userName);*/
+        taskResult();
+
+        function taskResult() {
+            $.ajax({
+                url: "http://localhost:8080/user/selectUserAll",
+                dataType: "json",
+                contentType: "application/json",
+                type: "get",
+                beforeSend: function () {
+                    console.log("请求前");
+                },
+                success: function (req) {
+                    console.log(req);
+                    initTastConfigTable(req.data);
+                },
+                complete: function () {
+                    console.log("请求完成");
+                },
+                error: function () {
+                    console.log("请求失败");
+                }
+
+            });
+        };
+
+        function initTastConfigTable(data) {
+            console.log(data);
+            $('#example').DataTable({
+                // 设置搜索框和显示数量位置
+                /*dom: '<"top"i>rt<"bottom"flp><"clear">',*/
+                //设置分页样式
+                pagingType:   "full_numbers",
+                language: {
+                    "lengthMenu": "每页 _MENU_ 条记录",
+                    "zeroRecords": "没有找到记录",
+                    "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                    "infoEmpty": "无记录",
+                    "infoFiltered": "(从 _MAX_ 条记录过滤)"
+                },
+                data: data,
+                columns: [
+                    {
+                        // title: "pwdid",
+                        data: "pwdid",
+                        visible: true,
+                        defaultContent: ''
+                    }, {
+                        // title: "name",
+                        data: "name",
+                        visible: true,
+                        defaultContent: ''
+                    }, {
+                        // title: "pwd",
+                        data: "pwd",
+                        visible: true,
+                        defaultContent: ''
+                    }, {
+                        // title: "email",
+                        data: "email",
+                        visible: true,
+                        defaultContent: ''
+                    }, {
+                        // title: "iphone",
+                        data: "iphone",
+                        visible: true,
+                        defaultContent: ''
+                    }, {
+                        // title: "salt",
+                        data: "salt",
+                        visible: true,
+                        defaultContent: ''
+                    }, {
+                        // title: "createdTime",
+                        data: "createdTime",
+                        visible: true,
+                        defaultContent: ''
+                    }
+                ],
+                initComplete: function () {
+                    //表格加载完毕，手动添加按钮到表格上
+                  /*  $("#toolbar").css("width", "100px").css("display", "inline").css("margin-left", "10px");
+                    $("#toolbar").append("我有问题");
+                    $("#toolbar").append("DIY");
+                    $("#toolbar").append("查看已解决问题");
+                    $("#toolbar").append("查看本实例代码");*/
+
+                    //加载已经关闭的问题
+                    $(".closedIssue").clickToggle(function () {
+                        //调用url方法切换dt的数据源
+                        githubTable.ajax.url("https://api.github.com/repos/ssy341/datatables-cn/issues?state=closed").load();
+                        $(this).text("查看未解决问题").css("color", "#FF0000");
+                    }, function () {
+                        githubTable.ajax.url("https://api.github.com/repos/ssy341/datatables-cn/issues").load();
+                        $(this).text("查看已解决问题").css("color", "#009900");
+                    });
+
+                    //查看本例子代码
+                    $(".viewCode").click(function () {
+                        //显示模态框展示代码
+                        $("#issueTableCode").modal("show");
+                        $("#issueTableCodeContent").html($("#issueTableScript").html());
+                    });
+                }
+            });
+
+        }
+    });
+
+
+    /* var data = "123"
+     url = "http://localhost/user/selectUserAll";
+     ;$.get(url, function (msg) {
+         data = msg;
+         console.log(data);
+         alert(data);
+         return data;
+     });*/
+
+    // $.get(url,function(jsonResult){
+    //     data = jsonResult.data;
+    //
+    // });
+    // console.log(data);
+    /*  var data=[
+          {
+              pwdid: 14,
+              name: "MyLog",
+              pwd: "2fc9922ddd9ad11d17ec21ace32574e5",
+              email: "2551332579@qq.com",
+              iphone: "18215399778",
+              salt: "M1LnO3i7jnegCezcqHZ0qA==",
+              createdTime: "2019-03-06T01:01:27.000+0000"
+          },
+          {
+              pwdid: 15,
+              name: "3359",
+              pwd: "8640c15ddedfd0add9fb9f8a07dfcbf3",
+              email: "255135632579@qq.com",
+              iphone: "18214599778",
+              salt: "JQmX2Lkgv1y/ut4u1K6+nQ==",
+              createdTime: "2019-04-20T07:30:43.000+0000"
+          },
+          {
+              pwdid: 16,
+              name: "868373",
+              pwd: "9e5ea577f80b44848992dfef5737105e",
+              email: "25513563342579@qq.com",
+              iphone: "18215391778",
+              salt: "K6rKCOYzS6eTACWutt1NYw==",
+              createdTime: "2019-05-23T15:44:01.000+0000"
+          },
+          {
+              pwdid: 17,
+              name: "system",
+              pwd: "216c50c45e2b3b7a8265beb3388a826c",
+              email: "helong255@yahoo.cn",
+              iphone: "18223499778",
+              salt: "jfFREzoCRCEq0+x3Wzl1iA==",
+              createdTime: "2019-05-23T16:09:09.000+0000"
+          }
+      ];
+      $('#example2').DataTable({
+         data:data,
+          columns: [
+              {data: 'pwdid'},
+              {data: 'name'},
+              {data: 'pwd'},
+              {data: 'email'},
+              {data: 'iphone'},
+              {data: 'salt'},
+              {data: 'createdTime'}
+          ]
+      });*/
+
+</script>
+</body>
+</html>

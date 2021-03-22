@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zglong.mylog.system.user.dao.UserDao">
+	<!-- 查询所有用户消息 -->
+	<select id="selectUserAll"
+		resultType="cn.zglong.mylog.system.user.entity.User">
+		select * from mylog_user
+	</select>
+	<!-- 添加信息,即注册 -->
+	<insert id="insertUser">
+		insert into
+		mylog_user
+		values (#{pwdid},#{name},#{pwd},#{email},#{iphone},#{salt},now())
+	</insert>
+	<!--登录查询 -->
+	<select id="selectLogin"
+		resultType="cn.zglong.mylog.system.user.entity.User">
+		select pwd,salt from mylog_user where name=#{name}
+		<!-- 获取到name和pwd后,后, -->
+	</select>
+	<!-- 注册用户名重复性验证 -->
+	<select id="selectName"
+		resultType="cn.zglong.mylog.system.user.entity.User">
+		select name from mylog_user where name=#{name}
+		<!-- 获取到name和pwd后,后, -->
+	</select>
+	<select id="selectEmail"
+		resultType="cn.zglong.mylog.system.user.entity.User">
+		select email from mylog_user where email=#{email}
+		<!-- 获取到name和pwd后,后, -->
+	</select>
+	<select id="selectIphone"
+		resultType="cn.zglong.mylog.system.user.entity.User">
+		select iphone from mylog_user where iphone=#{iphone}
+		<!-- 获取到name和pwd后,后, -->
+	</select>
+	
+</mapper>
+
+
+

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>吾志</title>
+    <link href="plugin/Bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugin/DataTables-1.10.18/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+    <style>
+        button {
+            z-index: 1;
+            position: relative;
+            font-size: 12px;
+            font-family: inherit;
+            color: white;
+            padding: 0.5em 1em;
+            outline: none;
+            border: none;
+            background-color: hsl(236, 32%, 26%);
+        }
+
+        button::before {
+            content: '';
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #0aba9d;
+            transform-origin: center right;
+            transform: scaleX(0);
+            transition: transform 0.25s ease-in-out;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+
+        button:hover::before {
+            transform-origin: center left;
+            transform: scaleX(1);
+        }
+
+    </style>
+    <script type="text/javascript">
+        //删除
+        function deleteById() {
+
+            var id = this.attr("id");
+            alert(id);
+
+        }
+    </script>
+</head>
+<body style="background-color: rgba(10,186,157,0.04)"><!--#0aba9d-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">新增功能API</h4>
+            </div>
+            <div class="modal-body">
+                <form action="detailed/insert" id="detailedInsert">
+                    <div class="form-group">
+                        <label for="formDetailed" class="control-label">功能</label>
+                        <input type="text" required class="form-control" id="formDetailed">
+                    </div>
+                    <div class="form-group">
+                        <label for="fromDesc" class="control-label">描述</label>
+                        <textarea class="form-control" id="fromDesc"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fromUrl" class="control-label">url</label>
+                        <input required class="form-control" id="fromUrl"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="fromMode" class="control-label">请求方式</label>
+                        <input class="form-control" id="fromMode"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="fromCount" class="control-label">参数列表</label>
+                        <input class="form-control" id="fromCount"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="fromExample" class="control-label">结果示例</label>
+                        <textarea class="form-control" id="fromExample"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fromState" class="control-label">状态</label>
+                        <input class="form-control" id="fromState"></input>
+                    </div>
+                    <!--<button type="button" data-dismiss="modal" id="close">返回</button>
+                    <button type="submit" id="save">保存</button>-->
+                </form>
+            </div>
+            <div class="modal-footer" id="fromDetailed">
+                <button type="button" data-dismiss="modal" id="close">返回</button>
+                <button type="button" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12" style="padding-bottom: 5%"></div>
+<div class="col-lg-1"></div>
+<div class="col-lg-4" id="detailedList1">
+
+
+</div>
+<div class="col-lg-4" id="detailedList2"></div>
+<div class="col-lg-3">
+    <button data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">新增</button>
+</div>
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="plugin/jQuery-3.3.1/jquery-3.3.1.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="plugin/Bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- dataTable-->
+<script type="text/javascript" src="../../plugin/jQuery-3.3.1/jquery-3.3.1.min.js"></script>
+<script src="../../plugin/DataTables-1.10.18/js/jquery.dataTables.js" type="text/javascript"></script>
+
+<script type="application/javascript">
+
+
+    $(function () {
+        //获得数据
+        var detailedData = getDetailed();
+        //新增
+        /*$("#save").onclick(function () {
+            insert();
+        })*/
+        //删除
+        // deleteById();
+        // $("#formDetailed") .on("click","#save",insert());
+        //构建html
+        // getHtml(detailedData);
+    });
+    function insert() {
+
+        // let object = ".modal-body .modal-body #detailedInsert";
+        //获取输入数据
+        url="detailed/insert"
+        var params={
+            detailed:$("#formDetailed").val(),
+            desc:$("#fromDesc").vat(),
+            url:$("#fromUrl").vat(),
+            mode:$("#fromMode").vat(),
+            count:$("#fromCount").vat(),
+            example:$("#fromExample").vat(),
+            state:$("#fromState").val()
+        }
+        $.get(url,params,function(result){
+
+            if(result.state==1){
+                alert(result.message);
+                doCancel();
+            }else{
+                alert(result.message);
+            }
+        })
+    }
+
+
+
+    function getDetailed() {
+        var url = "detailed/selectDetailedAll";
+        var detailedData = "";
+        $.getJSON(url, function (result) {//JsonResult
+            if (result.state == 1) {
+                detailedData = result.data;
+                console.log(detailedData)
+                getHtml(detailedData);
+            } else {
+                alert(result.message);
+            }
+        });
+        return detailedData;
+    }
+
+    function getHtml(detailedData) {
+        getDetailedIndex(detailedData);
+    }
+
+    function getDetailedIndex(detailedData) {
+        for (let i = 0; i < detailedData.length; i++) {
+            let detailedDataNum = detailedData[i];
+            let value = " <div class=\"panel-group \" id=\"accordion\" role=\"tablist\" aria-multiselectable=\"true\">\n" +
+                "        <div class=\"panel panel-default\">\n" +
+                "            <div class=\"panel-heading\" role=\"tab\" id=\"headingThree\">\n" +
+                "                <h4 class=\"panel-title\">\n" +
+                "                    <a type=\"button\" class=\"collapsed col-lg-8\" role=\"button\" data-toggle=\"collapse\" data-parent=\"#accordion\"\n" +
+                "                       href=\"#collapse" + detailedDataNum.id + "\" aria-expanded=\"false\" aria-controls=\"collapseThree\"><span>\n" + detailedDataNum.detailed +
+                "                    </span></a> " +
+                "                     <button>删除</button>&nbsp;<button>编辑</button><input hidden class = \"delete\" id=\"" + detailedDataNum.id + "\" onclick=\"deleteById()\">\n" +
+                "                </h4>\n" +
+                "            </div>\n" +
+                "            <div id=\"collapse" + detailedDataNum.id + "\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"headingThree\">\n" +
+                "                <div class=\"panel-body\">\n" +
+                " " +"<table border=\"2\" cellspacing=\"0\" width=\"100%\" style=\"font-size: 20px\">\n" +
+                "        <tr>\n" +
+                "            <th width='20%'>功能</th>\n" +
+                "            <td id=\"detailed\">" + detailedDataNum.detailed + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <th>描述</th>\n" +
+                "            <td id=\"desc\">" + detailedDataNum.desc + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <th>url</th>\n" +
+                "            <td id=\"url\">" + detailedDataNum.url + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <th>请求方式</th>\n" +
+                "            <td id=\"mode\">" + detailedDataNum.mode + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <th>参数列表</th>\n" +
+                "            <td id=\"count\">" + detailedDataNum.count + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <th>结果示例</th>\n" +
+                "            <td id=\"example\">" + detailedDataNum.example + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <th>状态</th>\n" +
+                "            <td id=\"state\">" + detailedDataNum.state + "</td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "    </div>"
+            if (i % 2 == 0) {
+                $("#detailedList2").append(value)
+
+            } else {
+                $("#detailedList1").append(value)
+            }
+        }
+    }
+
+    //构建html
+
+</script>
+</body>
+</html>

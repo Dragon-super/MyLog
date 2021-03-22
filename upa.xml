@@ -1,0 +1,43 @@
+<root>
+	<privateKey>UAP_zVvPAA</privateKey>
+	<srcContent />
+	<dataContent>
+		<syncContent dataType="1" operType="1">
+			<oldContent realmId="1">
+				<baseInfo>
+					<deptName text="组织机构全称">测试部门</deptName>
+					<isCorp text="组织机构类型" deptConfId="3">0</isCorp>
+					<deptStatus text="组织机构状态">1</deptStatus>
+					<deptStatusDetail text="组织机构状态明细">0</deptStatusDetail>
+					<showNum text="排序编号">10</showNum>
+					<deptLevelCode text="层级编码">11G.12D</deptLevelCode>
+					<deptUniCode text="组织机构编码">ceshiOrgA</deptUniCode>
+				</baseInfo>
+				<parentInfo>
+					<parentCode deptName="测试组织机构" deptStatusDetail="0" showNum="10" levelCode="11G" deptUniCode="ceshiOrg" isCorp="1" deptStatus="1" deptParentId="0" text="父级组织机构唯一标识" id="11">ceshiOrg
+					</parentCode>
+				</parentInfo>
+			</oldContent>
+			<changeContent>
+				<baseInfo />
+				<parentInfo />
+			</changeContent>
+			<newContent realmId="1">
+				<baseInfo>
+					<deptName text="组织机构全称">测试部门</deptName>
+					<isCorp text="组织机构类型" deptConfId="3">0</isCorp>
+					<deptStatus text="组织机构状态">1</deptStatus>
+					<deptStatusDetail text="组织机构状态明细">0</deptStatusDetail>
+					<showNum text="排序编号">10</showNum>
+					<deptLevelCode text="层级编码">11G.12D</deptLevelCode>
+					<deptUniCode text="组织机构编码">ceshiOrgA</deptUniCode>
+				</baseInfo>
+				<parentInfo>
+					<parentCode deptName="测试组织机构" deptStatusDetail="0" showNum="10" levelCode="11G" deptUniCode="ceshiOrg" isCorp="1" deptStatus="1" deptParentId="0" text="父级组织机构唯一标识" id="11">ceshiOrg
+					</parentCode>
+				</parentInfo>
+			</newContent>
+			<syncUnicode>ceshiOrgA</syncUnicode>
+		</syncContent>
+	</dataContent>
+</root>

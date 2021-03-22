@@ -1,0 +1,18 @@
+<div >
+    <div align="center">
+        <h1>欢迎注册</h1>
+        <a href="login">点击登录</a>
+        <br>
+        <hr width="70%"/>
+        <br><br>
+        <form class="form" id="entry_form" method="post" action="/user/insertUser">
+            用户名： <input type="text" required placeholder="随便输入" name="name" id="name"><br/>
+            密码： <input type="password" required placeholder="好像也可以随便输入" name="password" id="password"><br/>
+            重复密码：<input type="password" required placeholder="就是重复密码呗" name="password2" id="password2"><br>
+            邮箱：<input type="text" required placeholder="用来找回密码" name="email" id="email"><br/>
+            手机号：<input type="text" required placeholder="用来找回密码" name="iphone" id="iphone"><br/><br/>
+            <input type="submit" required value="点我注册"/><br/>
+            <!--<button type="button" id="entry_btn" class="signup">注册</button>-->
+        </form>
+    </div>
+</div>
